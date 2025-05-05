@@ -1,6 +1,20 @@
 spring:
   application:
     name: eventapp
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            provider: keycloak
+            client-id: eventapp
+            client-secret: <SECRET>
+            client-name: eventapp
+            authorization-grant-type: authorization_code
+            scope: openid, profile, email
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/proselyte
 
 server:
   port: 8091
