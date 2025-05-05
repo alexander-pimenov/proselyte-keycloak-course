@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: eventapp
+
+server:
+  port: 8091

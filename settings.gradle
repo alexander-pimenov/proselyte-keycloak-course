@@ -1,2 +1,3 @@
 rootProject.name = 'proselyte-keycloak-course'
 
+include 'eventapp'
