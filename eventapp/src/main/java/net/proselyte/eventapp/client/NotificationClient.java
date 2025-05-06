@@ -14,14 +14,17 @@ import java.util.Map;
 public class NotificationClient {
 
     private final RestTemplate restTemplate;
+    private final KeycloakTokenClient tokenClient;
 
     @Value("${notificationapp.url}")
     private String notificationAppUrl;
 
 
     public void sendNotification(Map<String, Object> payload) {
+        String token = tokenClient.getAccessToken();
 
         HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(token);
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(payload, headers);

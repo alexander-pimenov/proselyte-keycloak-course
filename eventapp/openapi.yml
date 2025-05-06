@@ -1,0 +1,91 @@
+openapi: 3.0.1
+info:
+  title: EventApp API
+  version: 1.0.0
+  description: API для управления событиями (eventapp), защищённый через Keycloak
+
+servers:
+  - url: http://localhost:8091
+    description: EventApp
+
+paths:
+  /api/v1/events:
+    get:
+      summary: Получение списка событий
+      tags: [ Events ]
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 0
+        - in: query
+          name: size
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Успешный ответ со списком событий
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventPageDto'
+      security:
+        - bearerAuth: [ ROLE_eventapp.user, ROLE_eventapp.admin ]
+
+    post:
+      summary: Создание события
+      tags: [ Events ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventDto'
+      responses:
+        '200':
+          description: Событие успешно создано
+      security:
+        - bearerAuth: [ ROLE_eventapp.user, ROLE_eventapp.admin ]
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    EventDto:
+      type: object
+      properties:
+        uid:
+          type: string
+        type:
+          type: string
+          enum: [ UPLOAD, DOWNLOAD ]
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          type: integer
+          format: int64
+        description:
+          type: string
+
+    EventPageDto:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventDto'
+        page:
+          type: integer
+        size:
+          type: integer
+        totalElements:
+          type: integer
+        totalPages:
+          type: integer

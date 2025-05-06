@@ -1,0 +1,68 @@
+openapi: 3.0.1
+info:
+  title: NotificationApp API
+  version: 1.0.0
+  description: API для работы с уведомлениями, защищённый через Keycloak
+
+servers:
+  - url: http://localhost:8092
+    description: NotificationApp
+
+paths:
+  /internal/api/v1/notifications:
+    post:
+      summary: Создание уведомления
+      tags: [Notifications]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationDto'
+      responses:
+        '200':
+          description: Уведомление успешно создано
+      security:
+        - bearerAuth: [ROLE_notificationapp.role_internal_access]
+
+  /internal/api/v1/notifications/{uid}:
+    get:
+      summary: Получение уведомления по UID
+      tags: [Notifications]
+      parameters:
+        - in: path
+          name: uid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Уведомление найдено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationDto'
+      security:
+        - bearerAuth: [ROLE_notificationapp.role_internal_access]
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    NotificationDto:
+      type: object
+      properties:
+        uid:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          type: integer
+          format: int64
+        message:
+          type: string
