@@ -13,8 +13,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/actuator/**").permitAll()
-                        .requestMatchers("/api/v1/events/**").authenticated()
+                        .requestMatchers("/actuator/**").hasAuthority("ROLE_eventapp.admin")
+                        .requestMatchers("/api/v1/events/**").hasAnyAuthority("ROLE_eventapp.user", "ROLE_eventapp.admin")
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
