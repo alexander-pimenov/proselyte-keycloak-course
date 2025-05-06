@@ -8,7 +8,7 @@ spring:
           keycloak:
             provider: keycloak
             client-id: eventapp
-            client-secret: <SECRET>
+            client-secret: qMuOyMewOXJ2ICSIcRZK6hLykHkDtpFA
             client-name: eventapp
             authorization-grant-type: authorization_code
             scope: openid, profile, email
@@ -18,3 +18,6 @@ spring:
 
 server:
   port: 8091
+
+notificationapp:
+  url: http://localhost:8092

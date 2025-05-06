@@ -46,6 +46,17 @@ services:
     networks:
       - keycloak_net
 
+  notificationapp:
+    build:
+      context: ./notificationapp
+    container_name: notificationapp
+    depends_on:
+      - keycloak
+    ports:
+      - "8092:8092"
+    networks:
+      - keycloak_net
+
 volumes:
   postgres_data:
 

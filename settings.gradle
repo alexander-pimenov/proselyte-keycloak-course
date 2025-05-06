@@ -1,3 +1,4 @@
 rootProject.name = 'proselyte-keycloak-course'
 
 include 'eventapp'
+include 'notificationapp'
