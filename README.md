@@ -206,4 +206,4 @@ proselyte-keycloak-course/
 - STEP7 - добавлены настройки безопасности для межсервисного взаимодействия 
 
 ## Автор
-[Eugene Suleimanov](https://github.com/proselyte)
+[Eugene Suleimanov](https://github.com/proselytear)
